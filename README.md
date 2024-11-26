@@ -1,5 +1,5 @@
-# laser-template
-Template for producing models implemented with the LASER toolkit.
+# laser-cohorts
+Cohort models implemented with the LASER toolkit.
 
 ## Setup
 Example using [uv](https://github.com/astral-sh/uv):
