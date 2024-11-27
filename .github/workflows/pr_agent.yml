@@ -3,18 +3,31 @@ on:
   pull_request:
     types: [opened, reopened, ready_for_review]
   issue_comment:
+    types: [created]
+
 jobs:
   pr_agent_job:
     if: ${{ github.event.sender.type != 'Bot' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest    
     permissions:
       issues: write
       pull-requests: write
       contents: write
     name: Run pr agent on every pull request, respond to user comments
     steps:
+      - name: Fetch all labels
+        id: labels
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          echo "labels=${{ toJSON(github.event.pull_request.labels) }}" >> $GITHUB_OUTPUT
+      - name: Check if label wants agent review
+        if: |
+          contains(join(fromJson(steps.labels.outputs.labels).*.[].name, ','), 'agent-review')
+        run: echo "Tag 'agent-review' detected. Proceeding with workflow..."
       - name: PR Agent action step
         id: pragent
+        if: |
+          contains(join(fromJson(steps.labels.outputs.labels).*.[].name, ','), 'agent-review')
         uses: Codium-ai/pr-agent@main
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
