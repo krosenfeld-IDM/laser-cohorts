@@ -7,6 +7,7 @@ name = "laser-template"
 version = "1.0.0"
 
 dependencies = [
+  "ipykernel>=6.29.5",
   "laser-core @ git+https://github.com/InstituteforDiseaseModeling/laser.git",
 ]
 
