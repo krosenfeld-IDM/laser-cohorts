@@ -50,6 +50,7 @@ from datetime import datetime
 import click
 import numpy as np
 import pandas as pd
+from laser_core.laserframe import LaserFrame
 from laser_core.propertyset import PropertySet
 from laser_core.random import seed as seed_prng
 from matplotlib import pyplot as plt
@@ -104,7 +105,10 @@ class Model:
 
         click.echo(f"Initializing the {name} model with {len(scenario)} patches…")
 
-        # TODO: Initialize the model here
+        # Add nodes to the model
+        num_nodes = len(scenario)
+        self.nodes = LaserFrame(num_nodes)
+        self.nodes.add(num_nodes)  # initialize: capacity = num_nodes (no new nodes can be added)
 
         return
 
@@ -229,7 +233,8 @@ class Model:
         if not pdf:
             for instance in self.instances:
                 for _plot in instance.plot():
-                    plt.show()
+                    if _plot is not None:
+                        plt.show()
 
         else:
             click.echo("Generating PDF output…")
@@ -237,8 +242,9 @@ class Model:
             with PdfPages(pdf_filename) as pdf:
                 for instance in self.instances:
                     for _plot in instance.plot():
-                        pdf.savefig()
-                        plt.close()
+                        if _plot is not None:
+                            pdf.savefig()
+                            plt.close()
 
             click.echo(f"PDF output saved to '{pdf_filename}'.")
 
