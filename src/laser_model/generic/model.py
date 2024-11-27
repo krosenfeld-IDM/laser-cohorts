@@ -39,6 +39,7 @@ import click
 import pandas as pd
 
 from laser_model import Model
+from laser_model import Step
 
 from .params import get_parameters
 
@@ -79,7 +80,7 @@ def run(**kwargs):
     parameters = get_parameters(kwargs)
     model = Model(scenario, parameters)
 
-    model.components = []
+    model.components = [Step]
 
     model.run()
 
