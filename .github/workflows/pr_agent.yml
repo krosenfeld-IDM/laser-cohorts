@@ -28,7 +28,7 @@ jobs:
         id: pragent
         if: |
           contains(join(fromJson(steps.labels.outputs.labels).*.[].name, ','), 'agent-review')
-        uses: Codium-ai/pr-agent@main
+        uses: Codium-ai/pr-agent@sha256:96c1a4a6b0269e963afa90a2fb3ff5550e16e16d6d68f2fd727b2b995bb734d5
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
