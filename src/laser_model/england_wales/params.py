@@ -47,13 +47,8 @@ def get_parameters(kwargs) -> PropertySet:
             "seed": 20241107,
         }
     )
-    spatial_params = PropertySet(
-            {"mixing_scale": 0.001, "distance_exponent": 1.5}
-    )
-    disease_params = PropertySet({"beta": 32,
-                                  "states": ['S', 'I', 'R'],
-                                  "seasonality": 0.06,
-                                  "demog_scale": 1.5})
+    spatial_params = PropertySet({"mixing_scale": 0.001, "distance_exponent": 1.5})
+    disease_params = PropertySet({"beta": 32, "states": ["S", "I", "R"], "seasonality": 0.06, "demog_scale": 1.5})
 
     # combine the parameter sets
     params = PropertySet(meta_params, spatial_params, disease_params)

@@ -20,7 +20,7 @@ class Step(BaseComponent):
         params = model.params
 
         # calculate the expected number of new infections
-        expected = params.beta * (1 + params.seasonality * np.cos(2*np.pi*tick/26.)) * np.matmul(params.mixing, states[1])
+        expected = params.beta * (1 + params.seasonality * np.cos(2 * np.pi * tick / 26.0)) * np.matmul(params.mixing, states[1])
         prob = 1 - np.exp(-expected / states.sum(axis=0))  # probability of infection
         dI = cast_type(np.random.binomial(n=states[0], p=prob), states.dtype)  # number of new infections in S
 

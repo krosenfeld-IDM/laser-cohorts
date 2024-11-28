@@ -20,8 +20,15 @@ laser
 
 ## Development notes
 
-To run all tests:
+For linting I find it useful to run:
 
+```bash
+uvx pre-commit run --all-file
+uvx ruff check
+uvx ruff check --fix
 ```
+
+To run all tests:
+```bash
 tox
 ```

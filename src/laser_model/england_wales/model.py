@@ -48,7 +48,6 @@ from laser_model.mixing import init_gravity_diffusion
 
 
 class EnglandWalesModel(Model):
-
     def __init__(self, scenario: pd.DataFrame, parameters: PropertySet, name: str = "EnglandWalesModel") -> None:
         """
         Initializes the model with the given scenario and parameters.
@@ -67,14 +66,13 @@ class EnglandWalesModel(Model):
         super().__init__(scenario, parameters, name)
 
         # create the state vector for each of the nodes (3, num_nodes)
-        self.nodes.add_vector_property("states", len(self.params.states)) # S, I, R
+        self.nodes.add_vector_property("states", len(self.params.states))  # S, I, R
 
         # initialize components
         self.components = [Step]
 
         # initialize the state counts in each node
         self.init_state(scenario, parameters)
-
 
     def init_state(self, settlements, params):
         """
@@ -94,11 +92,13 @@ class EnglandWalesModel(Model):
         num = population
         susc = births * 2
         inf = susc / 26.0 / 2.0
-        inf = inf.astype(self.nodes.states.dtype) # correct type
+        inf = inf.astype(self.nodes.states.dtype)  # correct type
 
         # self.nodes.states[0,?]
-        self.nodes.states[:, :] = np.array([susc, inf, num-susc-inf], dtype=self.nodes.states.dtype) # S
+        self.nodes.states[:, :] = np.array([susc, inf, num - susc - inf], dtype=self.nodes.states.dtype)  # S
 
+        params.population = population
+        params.births = births
         params.biweek_avg_births = params.demog_scale * births / 26.0
         params.biweek_death_prob = params.demog_scale * births / num / 26.0
 
@@ -106,7 +106,7 @@ class EnglandWalesModel(Model):
 
         return
 
-    def plot(self, fig = None):
+    def plot(self, fig=None):
         yield None
 
 
@@ -149,9 +149,7 @@ def run(**kwargs):
     parameters = get_parameters(kwargs)
     model = EnglandWalesModel(scenario, parameters)
     # add phases
-    model.components = [
-        Step
-    ]
+    model.components = [Step]
 
     # run the model
     model.run()

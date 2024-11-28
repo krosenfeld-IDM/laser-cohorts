@@ -167,6 +167,16 @@ class Model:
 
         return
 
+    def step(self, tick) -> None:
+        timing = [tick]
+        for phase in self.phases:
+            tstart = datetime.now(tz=None)  # noqa: DTZ005
+            phase(self, tick)
+            tfinish = datetime.now(tz=None)  # noqa: DTZ005
+            delta = tfinish - tstart
+            timing.append(delta.seconds * 1_000_000 + delta.microseconds)
+        self.metrics.append(timing)
+
     def run(self) -> None:
         """
         Execute the model for a specified number of ticks, recording the time taken for each phase.
@@ -193,15 +203,7 @@ class Model:
 
         self.metrics = []
         for tick in tqdm(range(self.params.nticks)):
-            timing = [tick]
-            for phase in self.phases:
-                tstart = datetime.now(tz=None)  # noqa: DTZ005
-                phase(self, tick)
-                tfinish = datetime.now(tz=None)  # noqa: DTZ005
-                delta = tfinish - tstart
-                timing.append(delta.seconds * 1_000_000 + delta.microseconds)
-            self.metrics.append(timing)
-
+            self.step(tick)
         self.tfinish = datetime.now(tz=None)  # noqa: DTZ005
         print(f"Completed the {self.name} model at {self.tfinish}…")
 

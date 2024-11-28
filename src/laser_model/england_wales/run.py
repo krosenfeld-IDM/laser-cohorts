@@ -19,7 +19,6 @@ class TotalInfectiousReporter(BaseComponent):
         model.reports.add_vector_property("infectious", length=model.params.nticks)
 
     def __call__(self, model, tick):
-
         # count the infecteds
         model.reports.infectious[tick] = model.nodes.states[1].sum()
 
@@ -32,6 +31,7 @@ class TotalInfectiousReporter(BaseComponent):
         plt.xlabel("Time (Bi-weekly)")
         yield
         return
+
 
 # setup the model
 scenario = get_scenario()
