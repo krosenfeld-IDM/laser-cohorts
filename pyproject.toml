@@ -9,7 +9,7 @@ version = "2.0.2"
 dependencies = [
   "ipykernel>=6.29.5",
   "jupyter-bokeh>=4.0.5",
-  "laser-core @ git+https://github.com/InstituteforDiseaseModeling/laser.git",
+  "laser-core @ git+https://github.com/InstituteforDiseaseModeling/laser.git@v0.1.1",
   "nbconvert>=7.16.4",
   "panel>=1.4.5",
 ]
