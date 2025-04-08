@@ -15,7 +15,7 @@ project = "laser_measles"
 year = "2024"
 author = "Institute for Disease Modeling"
 copyright = f"{year}, Bill & Melinda Gates Foundation"
-version = release = "2.0.2"
+version = release = "2.0.3"
 
 pygments_style = "trac"
 templates_path = ["."]
